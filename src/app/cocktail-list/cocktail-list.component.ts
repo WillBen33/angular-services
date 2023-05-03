@@ -5,14 +5,16 @@ import { Cocktail } from '../cocktail';
 @Component({
   selector: 'app-cocktail-list',
   templateUrl: './cocktail-list.component.html',
-  styleUrls: ['./cocktail-list.component.scss']
+  styleUrls: ['./cocktail-list.component.scss'],
 })
 export class CocktailListComponent {
+  cocktails: Cocktail[] = [];
 
-  cocktails!: Cocktail[];
+  constructor(public cocktailService: CocktailService) {}
 
-  constructor(private cocktailService: CocktailService) {
-    this.cocktails = this.cocktailService.getCocktails();
+  ngOnInit(): void {
+    this.cocktailService.getCocktails().subscribe((cocktailsFromJsonFile) => {
+      this.cocktails = cocktailsFromJsonFile;
+    });
   }
-
 }
